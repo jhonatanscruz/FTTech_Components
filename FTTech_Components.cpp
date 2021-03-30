@@ -8,7 +8,7 @@ FT_Stepper::FT_Stepper(int pinPUL, int pinDIR, int pinENA, int microstepsNumb)
     this->driverENA = pinENA;
     this->microsteps = microstepsNumb;
     this->pulseDelay = 750;
-    this->setDIR = 1;
+    this->setDIR = 0;
     this->setENA = 0;
     this->stepPosition = 0;
     this->stepError = 0;
@@ -90,7 +90,7 @@ void FT_Stepper::pulse(){
     delayMicroseconds(this->pulseDelay);
 
     if(this->setENA){
-        if(this->setDIR){
+        if(!this->setDIR){
             this->stepPosition++;
             this->degreePosition = this->degreePosition + (360./this->microsteps);
         }
@@ -131,18 +131,18 @@ void FT_Stepper::runTo(int toDegrees){
     // Avalia a alteração da direção do motor
     if(shiftDegrees > 0){
         changeError = 1;
-        this->changeDIR(1);
+        this->changeDIR(0);
     }
     else if(shiftDegrees < 0){
         changeError = 1;
-        this->changeDIR(0);
+        this->changeDIR(1);
     }
     else if(shiftDegrees == 0){
         changeError = 0;
     }
 
     // Cria a lógica de giro para o motor em ambos os sentidos
-    if(this->setDIR){
+    if(!this->setDIR){
         for(int i = 0; i < round(shiftSteps + this->stepError); i++){
             this->pulse();
         }
