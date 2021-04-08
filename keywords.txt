@@ -1,0 +1,39 @@
+############################################
+# Syntax Coloring Map For FTTech_Components
+############################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+FT_Stepper	KEYWORD1
+FT_Encoder	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin			KEYWORD2
+reset			KEYWORD2
+stop			KEYWORD2
+start			KEYWORD2
+getStepPosition		KEYWORD2
+getStepError		KEYWORD2
+getDegreePosition	KEYWORD2
+setPulseDelay		KEYWORD2
+changeDIR		KEYWORD2
+pulse			KEYWORD2
+run			KEYWORD2
+runTo			KEYWORD2
+
+PinA_OnChange	KEYWORD2
+PinB_OnChange	KEYWORD2
+PinZ_OnFalling	KEYWORD2
+getPosition	KEYWORD2
+getLaps		KEYWORD2
+readPinA	KEYWORD2
+readPinB	KEYWORD2
+readPinZ	KEYWORD2
+#######################################
+# Constants (LITERAL1)
+#######################################
