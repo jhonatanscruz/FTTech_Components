@@ -127,6 +127,48 @@ void FT_Stepper::run(int turnNumber){
         this->pulse();
     }
 }
+
+//--------------------------------------------------
+
+// MOTOR RUNS TO POSITION IN DEGREES
+/* 
+The motor rotates to the position in degrees specified in the 'toDegrees' variable
+*/
+void FT_Stepper::runningUntil(int toDegrees){
+
+    int shiftDegrees = round(toDegrees - this->degreePosition);
+
+    if(toDegrees > this->degreePosition){
+        shiftDegrees = shiftDegrees - 360;
+    }
+
+    float shiftSteps = shiftDegrees * (this->microsteps / 360.);
+    bool changeError;
+
+    // Evaluates whether the user wants to change the position
+    // Evaluates stepper direction change
+    if(shiftDegrees < 0){
+        changeError = 1;
+        this->changeDIR(1);
+    }
+
+    else if(shiftDegrees == 0){
+        changeError = 0;
+    }
+
+    //It Creates the turning logic for the stepper in both cw and ccw directions    
+
+    for(int i = 0; i > round(shiftSteps + this->stepError); i--){
+        this->pulse();
+    }
+
+    // Change the error value
+    if(changeError){
+        this->stepError = (shiftSteps + this->stepError) - round(shiftSteps + this->stepError);
+    }
+
+}
+
 //--------------------------------------------------
 
 // MOTOR RUNS TO POSITION IN DEGREES
@@ -145,10 +187,12 @@ void FT_Stepper::runTo(int toDegrees){
         changeError = 1;
         this->changeDIR(0);
     }
+
     else if(shiftDegrees < 0){
         changeError = 1;
         this->changeDIR(1);
     }
+
     else if(shiftDegrees == 0){
         changeError = 0;
     }
@@ -159,6 +203,7 @@ void FT_Stepper::runTo(int toDegrees){
             this->pulse();
         }
     }
+
     else{
         for(int i = 0; i > round(shiftSteps + this->stepError); i--){
             this->pulse();
@@ -174,7 +219,6 @@ void FT_Stepper::runTo(int toDegrees){
 //--------------------------------------------------
 
 // FT_Encoder ----------------------------------------------------------------
-
 FT_Encoder::FT_Encoder(const byte _pinA, const byte _pinB, const byte _pinZ)
 {
     this->pinA = _pinA;    // keep the pin A
@@ -197,6 +241,14 @@ void FT_Encoder::begin(){
     this->pinB_LastState = this->readPinB();
     this->pinA_CurrState =this->readPinA();
     this->pinB_CurrState = this->readPinB();
+}
+//--------------------------------------------------
+
+// Encoder RESET
+/* */
+void FT_Encoder::reset(){
+    this->position = 0;    // Encoder position (-4000 to 4000)
+    this->laps = 0;        // the laps number = 0
 }
 //--------------------------------------------------
 
@@ -262,6 +314,8 @@ void FT_Encoder::PinA_OnChange() {
             this->position--;
         }
     }
+
+    if(this->position == -3996) this->position = 0;
 }
 // ------------------------------------------------------------------------
 
@@ -328,6 +382,7 @@ void FT_Encoder::PinB_OnChange() {
         }
     }
 
+    if(this->position == -3996) this->position = 0;
 }
 // ------------------------------------------------------------------------
 
@@ -346,6 +401,13 @@ void FT_Encoder::PinZ_OnFalling() {
 volatile int long FT_Encoder::getPosition(){
 
     return this->position;
+}
+//--------------------------------------------------
+
+// ENCODER
+/* */
+void FT_Encoder::changePosition(volatile int long newPos){
+    this->position = newPos;
 }
 //--------------------------------------------------
 

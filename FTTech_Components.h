@@ -86,7 +86,12 @@ class FT_Stepper{
       
       // MOTOR RUNS TO POSITION IN DEGREES
       /*The motor rotates to the position in degrees specified in the degrees variable*/
-      void runTo(int degrees);
+      void runningUntil(int toDegrees);
+      //--------------------------------------------------
+
+      // MOTOR RUNS TO POSITION IN DEGREES
+      /*The motor rotates to the position in degrees specified in the degrees variable*/
+      void runTo(int toDegrees);
       //--------------------------------------------------
 };
 
@@ -112,48 +117,58 @@ class FT_Encoder{
       FT_Encoder(byte _pinA, byte _pinB, byte _pinZ);
       //--------------------------------------------------
 
-      // ENCODER INICIALIZATION
-      /* the encoder inicialization must be placed in the setup() function*/
+      // ENCODER
+      /* */
       void begin();
       //--------------------------------------------------
 
-      // ENCODER INICIALIZATION
-      /* the encoder inicialization must be placed in the setup() function*/
+      // ENCODER RESET
+      /* */
+      void reset();
+      //--------------------------------------------------
+
+      // ENCODER
+      /* */
       void PinA_OnChange();
       //--------------------------------------------------
 
-      // ENCODER INICIALIZATION
-      /* the encoder inicialization must be placed in the setup() function*/
+      // ENCODER
+      /* */
       void PinB_OnChange();
       //--------------------------------------------------
 
-      // ENCODER INICIALIZATION
-      /* the encoder inicialization must be placed in the setup() function*/
+      // ENCODER
+      /* */
       void PinZ_OnFalling();
       //--------------------------------------------------
 
-      // ENCODER INICIALIZATION
-      /* the encoder inicialization must be placed in the setup() function*/
+      // ENCODER
+      /* */
       volatile int long getPosition();
       //--------------------------------------------------
 
-      // ENCODER INICIALIZATION
-      /* the encoder inicialization must be placed in the setup() function*/
+      // ENCODER
+      /* */
+      void changePosition(volatile int long newPos);
+      //--------------------------------------------------
+
+      // ENCODER
+      /* */
       int getLaps();
       //--------------------------------------------------
 
-      // ENCODER INICIALIZATION
-      /* the encoder inicialization must be placed in the setup() function*/
+      // ENCODER
+      /* */
       byte readPinA();
       //--------------------------------------------------
 
-      // ENCODER INICIALIZATION
-      /* the encoder inicialization must be placed in the setup() function*/
+      // ENCODER
+      /* */
       byte readPinB();
       //--------------------------------------------------
 
-      // ENCODER INICIALIZATION
-      /* the encoder inicialization must be placed in the setup() function*/
+      // ENCODER
+      /* */
       byte readPinZ();
       //--------------------------------------------------
 };
