@@ -9,6 +9,7 @@ Currently supports the following hardware:
 
 ## News
 
+* 1.3 New "Reset()" function in FT_Enconder class to reset the encoder position.
 * 1.2 New "FT_Encoder" class to control a rotary encoder with 3 outputs (A, B, Z) and its example "Encoder_example".
 * 1.1.1 New "Reset()" function in "FT_Stepper" class to reset the motor position.
 * 1.1 Default direction of stteper rotation corrected to be in the clockwise direction.
