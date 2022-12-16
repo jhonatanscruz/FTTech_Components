@@ -1,4 +1,4 @@
-//LIBRARIES
+// LIBRARIES
 #include <FTTech_Components.h>
 
 // FT_Stepper ----------------------------------------------------------------
@@ -218,6 +218,8 @@ void FT_Stepper::runTo(int toDegrees){
 }
 //--------------------------------------------------
 
+// ###############################################################################################
+
 // FT_Encoder ----------------------------------------------------------------
 FT_Encoder::FT_Encoder(const byte _pinA, const byte _pinB, const byte _pinZ)
 {
@@ -386,9 +388,9 @@ void FT_Encoder::PinB_OnChange() {
 }
 // ------------------------------------------------------------------------
 
-// AttachInterrupt2, Signal Z - It changes on the falling edge (FALLING)
+// AttachInterrupt2, Signal Z - It changes on the rising edge (RISING)
 // It Counts the laps of the Encoder
-void FT_Encoder::PinZ_OnFalling() {
+void FT_Encoder::PinZ_OnRising() {
     if(dir) laps++;
     else laps--;
 
@@ -404,7 +406,7 @@ volatile int long FT_Encoder::getPosition(){
 }
 //--------------------------------------------------
 
-// ENCODER
+// ENCODER CHANGES ITS POSITION
 /* */
 void FT_Encoder::changePosition(volatile int long newPos){
     this->position = newPos;
@@ -434,5 +436,205 @@ byte FT_Encoder::readPinB() {
 // Returns the current value at output Z
 byte FT_Encoder::readPinZ() {
     return digitalRead(this->pinZ);
+}
+// ------------------------------------------------------------------------
+
+
+// // ###############################################################################################
+
+// FT_Encoder2 ----------------------------------------------------------------
+FT_Encoder2::FT_Encoder2(const byte _pinA, const byte _pinB)
+{
+    this->pinA = _pinA;    // keep the pin A
+    this->pinB = _pinB;    // keep the pin B
+    this->position = 0;    // Encoder position (-4000 to 4000)
+    this->dir = 0;         // Encoder direction of rotation
+    this->laps = 0;        // keep the laps number of Encoder
+}
+//--------------------------------------------------
+
+// Encoder INICIALIZATION
+/* the encoder inicialization must be placed in the setup() function */
+void FT_Encoder2::begin(){
+    pinMode(this->pinA,INPUT_PULLUP);
+    pinMode(this->pinB,INPUT_PULLUP);
+
+    this->pinA_LastState = this->readPinA();
+    this->pinB_LastState = this->readPinB();
+    this->pinA_CurrState =this->readPinA();
+    this->pinB_CurrState = this->readPinB();
+}
+//--------------------------------------------------
+
+// Encoder RESET
+/* */
+void FT_Encoder2::reset(){
+    this->position = 0;    // Encoder position (-4000 to 4000)
+    this->laps = 0;        // the laps number = 0
+}
+//--------------------------------------------------
+
+// AttachInterrupt0, Signal A - Any change at the edge (CHANGE)
+void FT_Encoder2::PinA_OnChange() {
+
+    this->pinA_LastState = this->pinA_CurrState;
+    this->pinB_LastState = this->pinB_CurrState;
+    this->pinA_CurrState = this->readPinA();
+    this->pinB_CurrState = this->readPinB();
+
+// ----------------------------- FIRST STATE ----------------------------
+    if(this->pinA_LastState == HIGH && this->pinB_LastState == LOW){
+
+        if(this->pinA_CurrState == HIGH && this->pinB_CurrState == HIGH){
+            this->dir = 1;
+            this->position++;
+        }
+        else if(this->pinA_CurrState == LOW && this->pinB_CurrState == LOW){
+            this->dir = 0;
+            this->position--;
+        }
+    }
+// ------------------------------------------------------------------------
+
+// ----------------------------- SECOND STATE -----------------------------
+    else if(this->pinA_LastState == HIGH && this->pinB_LastState == HIGH){
+
+        if(this->pinA_CurrState == LOW && this->pinB_CurrState == HIGH){
+            this->dir = 1;
+            this->position++;
+        }
+        else if(this->pinA_CurrState == HIGH && this->pinB_CurrState == LOW){
+            this->dir = 0;
+            this->position--;
+        }
+    }
+// ------------------------------------------------------------------------
+
+// ----------------------------- THIRD STATE ----------------------------
+    else if(this->pinA_LastState == LOW && this->pinB_LastState == HIGH){
+
+        if(this->pinA_CurrState == LOW && this->pinB_CurrState == LOW){
+            this->dir = 1;
+            this->position++;
+        }
+        else if(this->pinA_CurrState == HIGH && this->pinB_CurrState == HIGH){
+            this->dir = 0;
+            this->position--;
+        }
+    }
+// ------------------------------------------------------------------------
+
+// ----------------------------- LAST STATE ------------------------------
+    else if(this->pinA_LastState == LOW && this->pinB_LastState == LOW){
+
+        if(this->pinA_CurrState == HIGH && this->pinB_CurrState == LOW){
+            this->dir = 1;
+            this->position++;
+        }
+        else if(this->pinA_CurrState == LOW && this->pinB_CurrState == HIGH){
+            this->dir = 0;
+            this->position--;
+        }
+    }
+}
+// ------------------------------------------------------------------------
+
+// AttachInterrupt1, Signal B - Any change at the edge (CHANGE)
+void FT_Encoder2::PinB_OnChange() {
+
+    this->pinA_LastState = this->pinA_CurrState;
+    this->pinB_LastState = this->pinB_CurrState;
+    this->pinA_CurrState = this->readPinA();
+    this->pinB_CurrState = this->readPinB();
+
+// -----------------------------  FIRST STATE ----------------------------
+    if(this->pinA_LastState == HIGH && this->pinB_LastState == LOW){
+
+        if(this->pinA_CurrState == HIGH && this->pinB_CurrState == HIGH){
+            this->dir = 1;
+            this->position++;
+        }
+        else if(this->pinA_CurrState == LOW && this->pinB_CurrState == LOW){
+            this->dir = 0;
+            this->position--;
+        }
+    }
+// ------------------------------------------------------------------------
+
+// ----------------------------- SECOND STATE -----------------------------
+    else if(this->pinA_LastState == HIGH && this->pinB_LastState == HIGH){
+
+        if(this->pinA_CurrState == LOW && this->pinB_CurrState == HIGH){
+            this->dir = 1;
+            this->position++;
+        }
+        else if(this->pinA_CurrState == HIGH && this->pinB_CurrState == LOW){
+            this->dir = 0;
+            this->position--;
+        }
+    }
+// ------------------------------------------------------------------------
+
+// ----------------------------- THIRD STATE ----------------------------
+    else if(this->pinA_LastState == LOW && this->pinB_LastState == HIGH){
+
+        if(this->pinA_CurrState == LOW && this->pinB_CurrState == LOW){
+            this->dir = 1;
+            this->position++;
+        }
+        else if(this->pinA_CurrState == HIGH && this->pinB_CurrState == HIGH){
+            this->dir = 0;
+            this->position--;
+        }
+    }
+// ------------------------------------------------------------------------
+
+// ----------------------------- LAST STATE ------------------------------
+    else if(this->pinA_LastState == LOW && this->pinB_LastState == LOW){
+
+        if(this->pinA_CurrState == HIGH && this->pinB_CurrState == LOW){
+            this->dir = 1;
+            this->position++;
+        }
+        else if(this->pinA_CurrState == LOW && this->pinB_CurrState == HIGH){
+            this->dir = 0;
+            this->position--;
+        }
+    }
+}
+// ------------------------------------------------------------------------
+
+// ENCODER POSITION
+/* the encoder inicialization must be placed in the setup() function*/
+volatile int long FT_Encoder2::getPosition(){
+
+    return this->position;
+}
+//--------------------------------------------------
+
+// ENCODER CHANGES ITS POSITION
+/* */
+void FT_Encoder2::changePosition(volatile int long newPos){
+    this->position = newPos;
+}
+//--------------------------------------------------
+
+// ENCODER LAPS
+/* the encoder inicialization must be placed in the setup() function*/
+int FT_Encoder2::getLaps(){
+
+    return this->laps;
+}
+//--------------------------------------------------
+
+// Returns the current value at output A
+byte FT_Encoder2::readPinA() {
+    return digitalRead(this->pinA);
+}
+// ------------------------------------------------------------------------
+
+// Returns the current value at output B
+byte FT_Encoder2::readPinB() {
+    return digitalRead(this->pinB);
 }
 // ------------------------------------------------------------------------

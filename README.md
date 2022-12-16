@@ -6,9 +6,11 @@ Currently supports the following hardware:
 
 * StepperMotor;
 * Rotary encoder with 3 outputs(A, B, Z).
+* Rotary encoder with 2 outputs(A, B).
 
 ## News
 
+* 1.4 New "FT_Encoder" class to control a rotary encoder with 2 outputs (A, B)
 * 1.3 New "Reset()" function in FT_Encoder class to reset encoder position.
 * 1.2 New "FT_Encoder" class to control a rotary encoder with 3 outputs (A, B, Z) and its example "Encoder_example".
 * 1.1.1 New "Reset()" function in "FT_Stepper" class to reset motor position.

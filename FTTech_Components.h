@@ -95,6 +95,8 @@ class FT_Stepper{
       //--------------------------------------------------
 };
 
+// ###############################################################################################
+
 class FT_Encoder{
 
     private:
@@ -117,7 +119,7 @@ class FT_Encoder{
       FT_Encoder(byte _pinA, byte _pinB, byte _pinZ);
       //--------------------------------------------------
 
-      // ENCODER
+      // ENCODER BEGIN
       /* */
       void begin();
       //--------------------------------------------------
@@ -127,49 +129,118 @@ class FT_Encoder{
       void reset();
       //--------------------------------------------------
 
-      // ENCODER
+      // ACTION WHEN THERE IS A CHANGE ON PIN A
       /* */
       void PinA_OnChange();
       //--------------------------------------------------
 
-      // ENCODER
+      // ACTION WHEN THERE IS A CHANGE ON PIN B
       /* */
       void PinB_OnChange();
       //--------------------------------------------------
 
-      // ENCODER
+      // ACTION WHEN THERE IS A RISING EDGE ON PIN Z
       /* */
-      void PinZ_OnFalling();
+      void PinZ_OnRising();
       //--------------------------------------------------
 
-      // ENCODER
+      // ENCODER RETURNS ITS POSITION
       /* */
       volatile int long getPosition();
       //--------------------------------------------------
 
-      // ENCODER
+      // ENCODER CHANGES ITS POSITION
       /* */
       void changePosition(volatile int long newPos);
       //--------------------------------------------------
 
-      // ENCODER
+      // ENCODER RETURNS ITS NUMBER OF LAPS
       /* */
       int getLaps();
       //--------------------------------------------------
 
-      // ENCODER
+      // ENCODER RETURNS PIN A CURRENT VALUE
       /* */
       byte readPinA();
       //--------------------------------------------------
 
-      // ENCODER
+      // ENCODER RETURNS PIN B CURRENT VALUE
       /* */
       byte readPinB();
       //--------------------------------------------------
 
-      // ENCODER
+      // ENCODER RETURNS PIN Z CURRENT VALUE
       /* */
       byte readPinZ();
+      //--------------------------------------------------
+};
+
+// ###############################################################################################
+
+class FT_Encoder2{
+
+    private:
+      // MEMBER VARIABLES
+      byte pinA;                   // keep the A - pin
+      byte pinB;                   // keep the B - pin
+      int laps;                    // keep the laps number of Encoder
+      volatile int long position;  // Encoder position
+      byte dir;                    // Encoder direction of rotation
+      byte pinA_LastState;         // Encoder last state of pinA
+      byte pinB_LastState;         // Encoder last state of pinB
+      byte pinA_CurrState;         // Encoder cuurent state of pinA
+      byte pinB_CurrState;         // Encoder current state of pinB
+
+    //--------------------------------------------------
+
+    public:
+      // CONSTRUCTOR
+      FT_Encoder2(byte _pinA, byte _pinB);
+      //--------------------------------------------------
+
+      // ENCODER BEGIN
+      /* */
+      void begin();
+      //--------------------------------------------------
+
+      // ENCODER RESET
+      /* */
+      void reset();
+      //--------------------------------------------------
+
+      // ACTION WHEN THERE IS A CHANGE ON PIN A
+      /* */
+      void PinA_OnChange();
+      //--------------------------------------------------
+
+      // ACTION WHEN THERE IS A CHANGE ON PIN B
+      /* */
+      void PinB_OnChange();
+      //--------------------------------------------------
+
+      // ENCODER RETURNS ITS POSITION
+      /* */
+      volatile int long getPosition();
+      //--------------------------------------------------
+
+      // ENCODER CHANGES ITS POSITION
+      /* */
+      void changePosition(volatile int long newPos);
+      //--------------------------------------------------
+
+      // ENCODER RETURNS ITS NUMBER OF LAPS
+      /* */
+      int getLaps();
+      //--------------------------------------------------
+
+      // ENCODER RETURNS PIN A CURRENT VALUE
+      /* */
+      byte readPinA();
+      //--------------------------------------------------
+
+      // ENCODER RETURNS PIN B CURRENT VALUE
+      /* */
+      byte readPinB();
       //--------------------------------------------------
 };
 
