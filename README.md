@@ -4,13 +4,14 @@ Arduino library to make FTTECH equipments control easier. Examples supports the 
 
 Currently supports the following hardware:
 
-* StepperMotor;
+* Stepper Motor;
 * Rotary encoder with 3 outputs(A, B, Z).
 * Rotary encoder with 2 outputs(A, B).
 
 ## News
 
-* 1.4 New "FT_Encoder" class to control a rotary encoder with 2 outputs (A, B)
+* 1.4.1 Minor changes on "FT_Encoder2" class.
+* 1.4 New "FT_Encoder2" class to control a rotary encoder with 2 outputs (A, B)
 * 1.3 New "Reset()" function in FT_Encoder class to reset encoder position.
 * 1.2 New "FT_Encoder" class to control a rotary encoder with 3 outputs (A, B, Z) and its example "Encoder_example".
 * 1.1.1 New "Reset()" function in "FT_Stepper" class to reset motor position.

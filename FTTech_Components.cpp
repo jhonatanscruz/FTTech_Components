@@ -449,7 +449,6 @@ FT_Encoder2::FT_Encoder2(const byte _pinA, const byte _pinB)
     this->pinB = _pinB;    // keep the pin B
     this->position = 0;    // Encoder position (-4000 to 4000)
     this->dir = 0;         // Encoder direction of rotation
-    this->laps = 0;        // keep the laps number of Encoder
 }
 //--------------------------------------------------
 
@@ -469,8 +468,7 @@ void FT_Encoder2::begin(){
 // Encoder RESET
 /* */
 void FT_Encoder2::reset(){
-    this->position = 0;    // Encoder position (-4000 to 4000)
-    this->laps = 0;        // the laps number = 0
+    this->position = 0;
 }
 //--------------------------------------------------
 
@@ -616,14 +614,6 @@ volatile int long FT_Encoder2::getPosition(){
 /* */
 void FT_Encoder2::changePosition(volatile int long newPos){
     this->position = newPos;
-}
-//--------------------------------------------------
-
-// ENCODER LAPS
-/* the encoder inicialization must be placed in the setup() function*/
-int FT_Encoder2::getLaps(){
-
-    return this->laps;
 }
 //--------------------------------------------------
 

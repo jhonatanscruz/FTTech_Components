@@ -183,7 +183,6 @@ class FT_Encoder2{
       // MEMBER VARIABLES
       byte pinA;                   // keep the A - pin
       byte pinB;                   // keep the B - pin
-      int laps;                    // keep the laps number of Encoder
       volatile int long position;  // Encoder position
       byte dir;                    // Encoder direction of rotation
       byte pinA_LastState;         // Encoder last state of pinA
@@ -226,11 +225,6 @@ class FT_Encoder2{
       // ENCODER CHANGES ITS POSITION
       /* */
       void changePosition(volatile int long newPos);
-      //--------------------------------------------------
-
-      // ENCODER RETURNS ITS NUMBER OF LAPS
-      /* */
-      int getLaps();
       //--------------------------------------------------
 
       // ENCODER RETURNS PIN A CURRENT VALUE

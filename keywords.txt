@@ -8,6 +8,7 @@
 
 FT_Stepper	KEYWORD1
 FT_Encoder	KEYWORD1
+FT_Encoder2	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
